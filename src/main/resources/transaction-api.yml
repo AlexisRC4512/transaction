@@ -1,0 +1,206 @@
+openapi: 3.0.3
+info:
+  title: Transaction Service
+  description: API to manage Transaction
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+    description: Local server
+
+paths:
+  /api/v1/transaction:
+    get:
+      summary: Get all Transaction
+      operationId: getAllTTransaction
+      responses:
+        '200':
+          description: List of Transactions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TransactionResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      summary: Create a new Transaction
+      operationId: createTransaction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionRequest'
+      responses:
+        '201':
+          description:  Transaction create success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/v1/transaction/{id}:
+    get:
+      summary: Get a transaction by ID
+      operationId: getTransactionById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Id of Transaction
+          schema:
+            type: string
+      responses:
+        '200':
+          description: get Transaction by Id success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionResponse'
+        '404':
+          description: Transaction not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    put:
+      summary: Update a Transaction by ID
+      operationId: PurseBootcoin
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Id of Transaction
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionRequest'
+      responses:
+        '200':
+          description: Transaction updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Transaction not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      summary: Delete a Transaction ID
+      operationId: deletePurseBootcoin
+      parameters:
+        - name: id
+          in: path
+          description: Id of Transaction
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Transaction deleted
+        '404':
+          description: transaction id not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    Transaction:
+      type: object
+      properties:
+        idTransaction:
+          type: string
+        accountExternalIdDebit:
+          type: string
+        accountExternalIdCredit:
+          type: string
+        status:
+          type: string
+        value:
+          type: number
+        date:
+          type: string
+          format: date
+    TransactionRequest:
+      type: object
+      properties:
+        accountExternalIdDebit:
+          type: string
+        accountExternalIdCredit:
+          type: string
+        value:
+          type: number
+        date:
+          type: string
+          format: date
+    TransactionResponse:
+      type: object
+      properties:
+        idTransaction:
+          type: string
+        accountExternalIdDebit:
+          type: string
+        accountExternalIdCredit:
+          type: string
+        status:
+          type: string
+        value:
+          type: number
+        date:
+          type: string
+          format: date
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
