@@ -9,8 +9,7 @@ pipeline {
   stages {
     stage('Checkout') {
       steps {
-        // Reemplaza la URL con la correcta de tu repositorio
-        git 'https://github.com/AlexisRC4512/transaction.git'
+         git branch: 'main', url: 'https://github.com/AlexisRC4512/transaction.git'
       }
     }
 
